@@ -1,9 +1,5 @@
-import { BOATS } from './BoatData';
-import { calculateQuote } from './Calculator';
-import { OpenAIService } from './OpenAIService';
-
 // --- Trigger Entry Point ---
-function onGmailCompose(e: any) {
+function onGmailCompose(e) {
     return createComposeCard();
 }
 
@@ -21,7 +17,7 @@ function createComposeCard() {
         .setTitle("Select Vessel")
         .setFieldName("boatId");
 
-    BOATS.forEach(boat => {
+    BOATS.forEach(function (boat) {
         boatDropdown.addItem(boat.name, boat.id, false);
     });
     section1.addWidget(boatDropdown);
@@ -64,14 +60,9 @@ function createComposeCard() {
 }
 
 // --- Action Handler ---
-function generateQuoteCallback(e: any) {
+function generateQuoteCallback(e) {
     const formInputs = e.formInput;
     const boatId = formInputs.boatId;
-    // Date picker returns milliseconds from epoch as string, or yyyy-mm-dd? 
-    // CardService DatePicker usually returns JSON { msSinceEpoch: ... } or struct.
-    // Actually standard formInput for DatePicker often returns YYYY-MM-DD string if setFieldName is used directly?
-    // Let's accept that we need to handle the date input. 
-    // CAUTION: In CardService, date inputs behavior varies. Let's assume standard YYYY-MM-DD string for now.
     const dateStr = formInputs.date;
     const duration = parseInt(formInputs.duration);
     const instructions = formInputs.instructions || "No special instructions.";
@@ -83,17 +74,9 @@ function generateQuoteCallback(e: any) {
     }
 
     // Calculate
-    let quoteResult;
-    let errorMsg = "";
+    var quoteResult;
+    var errorMsg = "";
     try {
-        // If date is "null" or empty
-        if (typeof dateStr === 'object') {
-            // Sometimes it comes as { msSinceEpoch: ... }
-            // We might need to parse. For now, assuming string.
-            // logic to extract date if object...
-        }
-
-        // For simplicity in this rough draft, we pass the string.
         quoteResult = calculateQuote({
             boatId: boatId,
             date: dateStr.toString(),
@@ -111,13 +94,12 @@ function generateQuoteCallback(e: any) {
 
     // Call OpenAI
     const aiService = new OpenAIService();
-    const quoteDetailsString = `
-    Vessel: ${quoteResult.boatName}
-    Date: ${dateStr}
-    Duration: ${duration} Hours
-    Price: $${quoteResult.price}
-    Pricing Notes: ${quoteResult.notes.join(', ')}
-  `;
+    const quoteDetailsString =
+        "Vessel: " + quoteResult.boatName + "\\n" +
+        "Date: " + dateStr + "\\n" +
+        "Duration: " + duration + " Hours\\n" +
+        "Price: $" + quoteResult.price + "\\n" +
+        "Pricing Notes: " + quoteResult.notes.join(', ');
 
     const emailDraft = aiService.generateEmail(quoteDetailsString, instructions);
 
