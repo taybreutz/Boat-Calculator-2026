@@ -1,0 +1,27 @@
+{
+  "timeZone": "America/New_York",
+  "dependencies": {},
+  "exceptionLogging": "STACKDRIVER",
+  "oauthScopes": [
+    "https://www.googleapis.com/auth/gmail.addons.execute",
+    "https://www.googleapis.com/auth/script.external_request",
+    "https://www.googleapis.com/auth/gmail.addons.current.action.compose",
+    "https://www.googleapis.com/auth/userinfo.email"
+  ],
+  "gmail": {
+    "name": "Boat Calculator 2026",
+    "logoUrl": "https://www.gstatic.com/images/icons/material/system/1x/directions_boat_black_48dp.png",
+    "contextualTriggers": [],
+    "composeTrigger": {
+      "selectActions": [
+        {
+          "text": "Create Quote",
+          "runFunction": "createComposeCard"
+        }
+      ],
+      "draftAccess": "METADATA"
+    },
+    "primaryColor": "#4285F4",
+    "secondaryColor": "#4285F4"
+  }
+}

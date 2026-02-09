@@ -1,0 +1,10 @@
+# Dependencies
+node_modules/
+.npm/
+
+# Google Apps Script
+.clasp.json
+.google_creds.json
+
+# System
+.DS_Store
