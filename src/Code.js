@@ -104,11 +104,11 @@ function generateQuoteCallback(e) {
     const emailDraft = aiService.generateEmail(quoteDetailsString, instructions);
 
     // Insert into Draft
-    const response = CardService.newUpdateDraftActionResponseBuilder()
-        .setUpdateDraftBodyAction(CardService.newUpdateDraftBodyAction()
-            .addUpdateContent(emailDraft, CardService.ContentType.TEXT)
-            .setUpdateType(CardService.UpdateDraftBodyType.INSERT_AT_CURSOR))
-        .build();
+    const bodyAction = CardService.newUpdateDraftBodyAction()
+        .addUpdateContent(emailDraft, CardService.ContentType.PLAIN_TEXT);
+    // .setUpdateType(CardService.UpdateDraftBodyType.IN_PLACE_INSERT);
 
-    return response;
+    return CardService.newUpdateDraftActionResponseBuilder()
+        .setUpdateDraftBodyAction(bodyAction)
+        .build();
 }
