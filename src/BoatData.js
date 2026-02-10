@@ -48,7 +48,7 @@ const HOLIDAYS = [
     { name: "Juneteenth", start: "2026-06-19", end: "2026-06-19" },
     { name: "Black Yacht Weekend", start: "2026-06-19", end: "2026-06-21" },
     { name: "4th of July Week", start: "2026-07-03", end: "2026-07-05" },
-    { name: "Air & Water Show", start: "2026-08-29", end: "2026-08-30" }
+    { name: "Air & Water Show", start: "2026-08-15", end: "2026-08-16" }
 ];
 
 function getTier(date) {
