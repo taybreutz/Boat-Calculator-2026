@@ -171,10 +171,10 @@ function generateQuoteCallback(e) {
         "Beverage Package: " + escapeHtml(beverageDisplay),
         "Beverage Amount: " + formatCurrency(beveragePackageAmount),
         "Food + Beverage Tax (11.25%): " + formatCurrency(packageTax),
-        "Service Charge (18% post-discount): " + formatCurrency(serviceCharge),
+        "Service Charge (18% Gratuity + Admin Fee): " + formatCurrency(serviceCharge),
         "<strong>Total: " + formatCurrency(grandTotal) + "</strong>",
         "",
-        "Pricing Notes: " + escapeHtml(quoteResult.notes.join(", "))
+        // "Pricing Notes: " + escapeHtml(quoteResult.notes.join(", "))
     ];
     const quoteHtml = quoteLines.join("<br>");
     const emailDraftHtml = greetingHtml + "<br><br>" + quoteHtml;
