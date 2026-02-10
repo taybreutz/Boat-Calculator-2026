@@ -4,20 +4,22 @@ class OpenAIService {
         this.apiUrl = 'https://api.openai.com/v1/chat/completions';
     }
 
-    generateEmail(quoteDetails, userInstructions) {
+    generateGreeting(context, notes) {
         if (!this.apiKey) {
-            return "Error: OPENAI_API_KEY is not set in Script Properties.";
+            return this.defaultGreeting(context);
         }
 
-        const systemPrompt = "You are a helpful booking assistant for a boat rental company.\\n" +
-            "Your task is to write a polite, professional, and exciting email quote response.\\n" +
-            "Use the provided quote details (Boat, Price, Date, Notes).\\n" +
-            "Incorporated the user's specific verbal instructions into the email body naturally.\\n" +
-            "Be concise but warm.";
+        const systemPrompt = "You write only the greeting and rapport section for a yacht charter quote email.\\n" +
+            "Do not include prices, totals, taxes, fees, discounts, or any quote line items.\\n" +
+            "Do not include subject lines or signatures.\\n" +
+            "Keep it warm, professional, and concise (2-4 short paragraphs).";
 
-        const userPrompt = "\\nQUOTE DETAILS:\\n" + quoteDetails + "\\n\\n" +
-            "VERBAL INSTRUCTIONS:\\n" + userInstructions + "\\n\\n" +
-            "Please draft the email.";
+        const userPrompt = "CUSTOMER: " + context.customerName + "\\n" +
+            "VESSEL: " + context.boatName + "\\n" +
+            "DATE: " + context.date + "\\n" +
+            "DURATION: " + context.durationHours + " hours\\n\\n" +
+            "NOTES FOR TONE/RAPPORT:\\n" + (notes || "No additional notes.") + "\\n\\n" +
+            "Write only the greeting/rapport text.";
 
         const payload = {
             model: "gpt-4o",
@@ -42,11 +44,18 @@ class OpenAIService {
             const response = UrlFetchApp.fetch(this.apiUrl, options);
             const json = JSON.parse(response.getContentText());
             if (json.error) {
-                return "OpenAI Error: " + json.error.message;
+                return this.defaultGreeting(context);
             }
             return json.choices[0].message.content;
         } catch (e) {
-            return "Error calling OpenAI: " + e;
+            return this.defaultGreeting(context);
         }
+    }
+
+    defaultGreeting(context) {
+        return "Hi " + context.customerName + ",\n\n" +
+            "Thank you for reaching out about your charter plans. I put together your quote details below for the " +
+            context.boatName + " on " + context.date + ".\n\n" +
+            "If you'd like, I can also tailor options based on your preferred onboard experience.";
     }
 }
