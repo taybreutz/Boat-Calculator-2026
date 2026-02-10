@@ -174,9 +174,9 @@ function generateQuoteCallback(e) {
         "Service Charge (18%): " + formatCurrency(serviceCharge),
         "<strong>Total: " + formatCurrency(grandTotal) + "</strong>",
         "",
-        "Pricing Notes: " + escapeHtml(quoteResult.notes.join(", ")),
+        "<em>** An 18% service charge is automatically applied for our Captain, Crew, and Operations team. Additional gratuity for the day-of crew may be added if desired.</em>",
         "",
-        "<em>** An 18% service charge will be added to all private charters. This charge is not a gratuity and is distributed among crew, sales, and admin teams. Additional gratuities are at the client's discretion.</em>"
+        // "Pricing Notes: " + escapeHtml(quoteResult.notes.join(", ")),
     ];
     const quoteHtml = quoteLines.join("<br>");
     const emailDraftHtml = greetingHtml + "<br><br>" + quoteHtml;
