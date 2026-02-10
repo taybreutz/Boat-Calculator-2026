@@ -5,12 +5,12 @@ var SeasonTier = {
 
 // Boats
 const BOATS = [
-    { id: '37_sear', name: "37' Sea Ray", capacity: 12, type: 'Standard' },
-    { id: '46_sear', name: "46' Sea Ray Express", capacity: 12, type: 'Standard' },
-    { id: '48_sear', name: "48' Sea Ray Express Bridge", capacity: 12, type: 'Standard' },
-    { id: '50_sear', name: "50' Sea Ray Sundancer", capacity: 12, type: 'Standard' },
-    { id: '56_sear', name: "56' Sea Ray Sundancer", capacity: 12, type: 'Standard' },
-    { id: '57_azim', name: "57' Azimut Flybridge", capacity: 12, type: 'Standard' },
+    // { id: '37_sear', name: "37' Sea Ray", capacity: 12, type: 'Standard' },
+    // { id: '46_sear', name: "46' Sea Ray Express", capacity: 12, type: 'Standard' },
+    // { id: '48_sear', name: "48' Sea Ray Express Bridge", capacity: 12, type: 'Standard' },
+    // { id: '50_sear', name: "50' Sea Ray Sundancer", capacity: 12, type: 'Standard' },
+    // { id: '56_sear', name: "56' Sea Ray Sundancer", capacity: 12, type: 'Standard' },
+    // { id: '57_azim', name: "57' Azimut Flybridge", capacity: 12, type: 'Standard' },
     { id: '57_pcat', name: "57' Power Catamaran", capacity: 40, type: 'COI' },
     { id: '72_clas', name: "72' Classic Chris Craft", capacity: 40, type: 'COI' },
     { id: '85_pcat', name: "85' Power Catamaran", capacity: 40, type: 'COI' }
