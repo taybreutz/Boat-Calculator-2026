@@ -167,14 +167,16 @@ function generateQuoteCallback(e) {
         "Vessel Base: " + formatCurrency(vesselBase),
         "Vessel Discount (" + formatPercent(discountPercent) + "): -" + formatCurrency(appliedDiscount),
         "Vessel After Discount: " + formatCurrency(discountedVessel),
-        "Food Package: " + formatCurrency(foodPackageAmount),
+        "Food Amount: " + formatCurrency(foodPackageAmount),
         "Beverage Package: " + escapeHtml(beverageDisplay),
         "Beverage Amount: " + formatCurrency(beveragePackageAmount),
         "Food + Beverage Tax (11.25%): " + formatCurrency(packageTax),
-        "Service Charge (18% Gratuity + Admin Fee): " + formatCurrency(serviceCharge),
+        "Service Charge (18%): " + formatCurrency(serviceCharge),
         "<strong>Total: " + formatCurrency(grandTotal) + "</strong>",
         "",
-        // "Pricing Notes: " + escapeHtml(quoteResult.notes.join(", "))
+        "Pricing Notes: " + escapeHtml(quoteResult.notes.join(", ")),
+        "",
+        "<em>** An 18% service charge will be added to all private charters. This charge is not a gratuity and is distributed among crew, sales, and admin teams. Additional gratuities are at the client's discretion.</em>"
     ];
     const quoteHtml = quoteLines.join("<br>");
     const emailDraftHtml = greetingHtml + "<br><br>" + quoteHtml;
@@ -269,8 +271,14 @@ function normalizeDateInput(value) {
 
     if (/^\d{4}-\d{2}-\d{2}$/.test(asString)) {
         var yyyyMmDd = asString;
+        var isoParts = yyyyMmDd.split("-");
+        var localDate = new Date(
+            parseInt(isoParts[0], 10),
+            parseInt(isoParts[1], 10) - 1,
+            parseInt(isoParts[2], 10)
+        );
         var displayFromIso = Utilities.formatDate(
-            new Date(yyyyMmDd + "T00:00:00"),
+            localDate,
             Session.getScriptTimeZone(),
             "MMMM d, yyyy"
         );
@@ -285,9 +293,10 @@ function normalizeDateInput(value) {
     var dateObj = new Date(ms);
     if (isNaN(dateObj.getTime())) return null;
 
+    // Date picker timestamps can be midnight UTC; format in UTC to avoid day-shift.
     return {
-        isoDate: Utilities.formatDate(dateObj, Session.getScriptTimeZone(), "yyyy-MM-dd"),
-        displayDate: Utilities.formatDate(dateObj, Session.getScriptTimeZone(), "MMMM d, yyyy")
+        isoDate: Utilities.formatDate(dateObj, "UTC", "yyyy-MM-dd"),
+        displayDate: Utilities.formatDate(dateObj, "UTC", "MMMM d, yyyy")
     };
 }
 
