@@ -171,7 +171,7 @@ function generateQuoteCallback(e) {
         "Beverage Package: " + escapeHtml(beverageDisplay),
         "Beverage Amount: " + formatCurrency(beveragePackageAmount),
         "Food + Beverage Tax (11.25%): " + formatCurrency(packageTax),
-        "Service Charge (18%): " + formatCurrency(serviceCharge),
+        "** Service Charge (18%): " + formatCurrency(serviceCharge),
         "<strong>Total: " + formatCurrency(grandTotal) + "</strong>",
         "",
         "<em>** An 18% service charge is automatically applied for our Captain, Crew, and Operations team. Additional gratuity for the day-of crew may be added if desired.</em>",
